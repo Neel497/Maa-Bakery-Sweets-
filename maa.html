@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bakery Delight</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f4f6;
+            color: #333;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Header */
+        header {
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            font-size: 20px;
+            color: #e91e63;
+            font-weight: bold;
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        nav a {
+            color: #555;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #e91e63;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            text-align: center;
+            color: white;
+        }
+
+        .hero img {
+            width: 100%;
+            height: 50vh;
+            object-fit: cover;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 98.5%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 30px;
+            font-weight: bold;
+            animation: fadeIn 2s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* About Section */
+        .about {
+            padding: 30px 20px;
+            text-align: center;
+            background: #fff;
+        }
+
+        .about h2 {
+            font-size: 24px;
+            color: #e91e63;
+            margin-bottom: 20px;
+        }
+
+        .about p {
+            color: #555;
+            font-size: 16px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Menu Section */
+        .menu {
+            padding: 30px 20px;
+            text-align: center;
+            background: #f3f4f6;
+        }
+
+        .menu h2 {
+            font-size: 24px;
+            color: #e91e63;
+            margin-bottom: 20px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .menu-item {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .menu-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .menu-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .menu-item h3 {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .menu-item p {
+            color: #555;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        /* Specialties Section */
+        .specialties {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .specialties h2 {
+            font-size: 24px;
+            color: #e91e63;
+            margin-bottom: 20px;
+        }
+
+        .specialties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #fff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 15px;
+        }
+
+        .card-content h3 {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .card-content p {
+            color: #555;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 30px 20px;
+            text-align: center;
+            background: #fff;
+        }
+
+        .gallery h2 {
+            font-size: 24px;
+            color: #e91e63;
+            margin-bottom: 2px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .gallery-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        /* Visit Section */
+        .visit {
+            background: #e91e63;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .visit-content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .visit h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .visit a {
+            display: inline-block;
+            background: #fff;
+            color: #e91e63;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .visit a:hover {
+            background: #f3f4f6;
+            color: #e91e63;
+        }
+
+        .contact-info {
+            margin-top: 20px;
+        }
+
+        .contact-info p {
+            font-size: 14px;
+            margin: 5px 0;
+        }
+
+        .contact-info i {
+            margin-right: 5px;
+        }
+
+        .map-container {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 250px;
+            border: 0;
+            border-radius: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        footer a {
+            color: white;
+            margin: 0 10px;
+            transition: 0.3s;
+        }
+
+        footer a:hover {
+            color: #e91e63;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            padding-top: 60px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .modal.show {
+            opacity: 1;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 80%;
+            max-height: 80%;
+            transform: scale(0.9);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        #modal-caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #fff;
+            padding: 10px 0;
+            font-size: 18px;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #e91e63;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Media Queries for Mobile */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav {
+                margin-top: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 24px;
+            }
+
+            .specialties-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .visit {
+                flex-direction: column;
+            }
+
+            .visit-content, .map-container {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .map-container iframe {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+    <div class="container">
+        <div class="logo">
+            <img src="logo.png" alt="Bakery Logo">
+            <h1>Maa Bakery</h1>
+        </div>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+    <img src="bg.jpg" alt="Bakery Items">
+    <div class="hero-overlay">
+        <h1>Welcome to Maa Bakery & Sweets</h1>
+    </div>
+</section>
+
+<!-- Specialties Section -->
+<section class="specialties">
+    <h2>Our Specialties</h2>
+    <div class="specialties-grid">
+        <div class="card">
+            <img src="ph3.jpg" alt="Chocolate Cake">
+            <div class="card-content">
+                <h3>Cake</h3>
+                <p>A sweet, baked dessert made with flour, sugar, eggs, and flavorings, often frosted or decorated.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="ph1.jpg" alt="Croissants">
+            <div class="card-content">
+                <h3>Snacks</h3>
+                <p>Light, quick bites typically enjoyed between meals, ranging from savory to sweet.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="ph02.jpg" alt="Macarons">
+            <div class="card-content">
+                <h3>Nankhatai</h3>
+                <p>Nankhatai is a soft and crispy Indian cookie made with flour, ghee, and sugar.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Gallery Section -->
+<section class="gallery" id="gallery">
+    <h2>Gallery</h2>
+    <div class="gallery-grid">
+        <div class="gallery-item">
+            <img src="p4.jpg" alt="Gallery Image 1">
+        </div>
+        <div class="gallery-item">
+            <img src="p2.jpg" alt="Gallery Image 2">
+        </div>
+        <div class="gallery-item">
+            <img src="p3.jpg" alt="Gallery Image 3">
+        </div>
+        <div class="gallery-item">
+            <img src="p5.jpg" alt="Gallery Image 4">
+        </div>
+        <div class="gallery-item">
+            <img src="p6.jpg" alt="Gallery Image 5">
+        </div>
+        <div class="gallery-item">
+            <img src="ph7.jpg" alt="Gallery Image 6">
+        </div>
+    </div>
+</section>
+
+<!-- Visit Section -->
+<section class="visit" id="contact">
+    <div class="visit-content">
+        <h2>Visit Us Today!</h2>
+        <p>Shop No 10, Reshma Complex, Puna Patiya, Surat - 395010</p>
+        <a href="https://maps.app.goo.gl/KcfBG9NVf5JHBmaKA">Get Directions</a>
+        <div class="contact-info">
+            <a href="tel:+919879183937">
+                <p><i class="fas fa-phone"></i> +91 9879183937</p>
+            </a>
+            <a href="mailto:dhavalvadia111@gmail.com">
+                <p><i class="fas fa-envelope"></i> dhavalvadia111@gmail.com</p>
+            </a>
+        </div>
+    </div>
+    <div class="map-container">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.959585270815!2d72.86723137519274!3d21.19376438049724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04fa3669dde87%3A0x4ea3fb687dd9f918!2sMaa%20Bakery%20%26%20Sweets!5e0!3m2!1sen!2sin!4v1742534638750!5m2!1sen!2sin" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <p>© 2025 Bakery Delight. All rights reserved.</p>
+    <a href="#"><i class="fab fa-facebook-f"></i></a>
+    <a href="#"><i class="fab fa-twitter"></i></a>
+    <a href="#"><i class="fab fa-instagram"></i></a>
+</footer>
+
+<!-- Modal -->
+<script>
+    // Intersection Observer for Scroll Animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    // Observe Cards
+    document.querySelectorAll('.card').forEach((card) => {
+        observer.observe(card);
+    });
+
+    // Observe Gallery Items
+    document.querySelectorAll('.gallery-item').forEach((item) => {
+        observer.observe(item);
+    });
+
+    // Modal Functionality
+    const modal = document.getElementById("modal");
+    const modalImg = document.getElementById("modal-img");
+    const captionText = document.getElementById("modal-caption");
+
+    // Get all gallery items
+    const galleryItems = document.querySelectorAll('.gallery-item img');
+
+    // Loop through each gallery item and add a click event listener
+    galleryItems.forEach(item => {
+        item.addEventListener('click', () => {
+            modal.classList.add('show');
+            modal.style.display = "block";
+            modalImg.src = item.src;
+            captionText.textContent = item.alt;
+        });
+    });
+
+    // Get the <span> element that closes the modal
+    const span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.classList.remove('show');
+        modal.style.display = "none";
+    };
+
+    // When the user clicks anywhere outside the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.classList.remove('show');
+            modal.style.display = "none";
+        }
+    };
+
+    // Close modal on pressing the Escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === "Escape" && modal.style.display === "block") {
+            modal.classList.remove('show');
+            modal.style.display = "none";
+        }
+    });
+</script>
+
+</body>
+</html>
